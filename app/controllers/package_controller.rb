@@ -27,7 +27,7 @@ class PackageController < OBSController
                          end
 
       pkg_appdata = @appdata[:apps].first {|app| app[:pkgname].downcase == @pkgname.downcase}
-      if (!pkg_appdata.blank?)
+      if (pkg_appdata.present?)
         @name = pkg_appdata[:name]
         @appcategories = pkg_appdata[:categories]
         @homepage = pkg_appdata[:homepage]
