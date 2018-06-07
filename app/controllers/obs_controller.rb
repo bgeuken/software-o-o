@@ -55,9 +55,9 @@ class OBSController < ApplicationController
                     else
                       "openSUSE:Factory"
                     end
-    @search_devel = (cookies[:search_devel] == "true" ? true : false)
-    @search_lang = (cookies[:search_lang] == "true" ? true : false)
-    @search_debug = (cookies[:search_debug] == "true" ? true : false)
+    @search_devel = cookies[:search_devel] == "true"
+    @search_lang = cookies[:search_lang] == "true"
+    @search_debug = cookies[:search_debug] == "true"
   end
 
   def filter_packages
