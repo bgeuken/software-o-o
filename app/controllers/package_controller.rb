@@ -18,12 +18,12 @@ class PackageController < OBSController
       # only show rpms
       @packages = @packages.select {|p| p.first.type != 'ymp' && p.quality != "Private"}
       @default_project = @baseproject
-      @default_project_name = @distributions.select {|d| d[:project] == @default_project}.first[:name]
-      @default_repo = @distributions.select {|d| d[:project] == @default_project}.first[:repository]
-      @default_package = if (!@packages.select {|s| s.project == "#{@default_project}:Update"}.empty?)
-                           @packages.select {|s| s.project == "#{@default_project}:Update"}.first
+      @default_project_name = @distributions.first {|d| d[:project] == @default_project}[:name]
+      @default_repo = @distributions.first {|d| d[:project] == @default_project}[:repository]
+      @default_package = if @packages.any? {|s| s.project == "#{@default_project}:Update"}
+                           @packages.first {|s| s.project == "#{@default_project}:Update"}
                          else
-                           @packages.select {|s| [@default_project, "#{@default_project}:NonFree"].include? s.project}.first
+                           @packages.first {|s| [@default_project, "#{@default_project}:NonFree"].include? s.project}
                          end
 
       pkg_appdata = @appdata[:apps].select {|app| app[:pkgname].downcase == @pkgname.downcase}
