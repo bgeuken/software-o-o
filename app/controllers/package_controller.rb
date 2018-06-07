@@ -26,11 +26,11 @@ class PackageController < OBSController
                            @packages.first {|s| [@default_project, "#{@default_project}:NonFree"].include? s.project}
                          end
 
-      pkg_appdata = @appdata[:apps].select {|app| app[:pkgname].downcase == @pkgname.downcase}
-      if (!pkg_appdata.first.blank?)
-        @name = pkg_appdata.first[:name]
-        @appcategories = pkg_appdata.first[:categories]
-        @homepage = pkg_appdata.first[:homepage]
+      pkg_appdata = @appdata[:apps].first {|app| app[:pkgname].downcase == @pkgname.downcase}
+      if (!pkg_appdata.blank?)
+        @name = pkg_appdata[:name]
+        @appcategories = pkg_appdata[:categories]
+        @homepage = pkg_appdata[:homepage]
       end
 
       @screenshot = url_for :controller => :package, :action => :screenshot, :package => @pkgname, protocol: request.protocol
